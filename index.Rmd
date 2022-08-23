@@ -1,6 +1,6 @@
 --- 
 title: "Making free books with RStudio’s RMarkdown & Bookdown"
-author: "Julie Lowndes"
+author: "Julie Lownde"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 # output: bookdown::gitbook
@@ -11,6 +11,13 @@ link-citations: yes
 github-repo: openscapes/series
 description: "A mini bookdown tutorial book on how to make bookdown books."
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F)
+library(tidyverse)
+library(lubridate)
+library(knitr)
+```
 
 # Welcome {#welcome}
 

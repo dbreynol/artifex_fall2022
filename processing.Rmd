@@ -1,0 +1,32 @@
+# Data Processing
+
+```{r}
+set.seed(1)
+customer = c("113 - Dollar General", "217 - Dollar General", "2114 - WalMart", "99 - WalMart",
+             "23 - CVS", "09 - CVS") # numbers dash name
+product = c("WX1X - 9 gal - Jelly", "WX1P - 4 gal - Jelly",
+            "QP1X - 11 gal - Grape Juice", "QP1 - 7 gal - Fruit Juice",
+            "TYL - 1 gal - Peanut Butter", "LL - 2 gal - Jam") # letters size description
+business_unit = c("123 Retail", "437 Consumer",
+                  "990 International", "222 Retail",
+                  "49 Consumer", "09 International") # number dash name
+#"1-1-2022" 
+
+df = data.frame(customer, product, business_unit, 
+                "1-1-2022" = rpois(6, 1100),
+                "2-1-2022" = rpois(6, 1200),
+                "3-1-2022" = rpois(6, 1300),
+                check.names = F)
+kable(head(df))
+```
+
+
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+## Including Plots
+
+You can also embed plots, for example:
+
