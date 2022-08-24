@@ -1,6 +1,4 @@
-tab:unnamed-chunk-2
-welcome
-learn-all-about-bookdown
+tab:unnamed-chunk-3
 data-processing
 cleaning-up-strings
 dealing-with-dates

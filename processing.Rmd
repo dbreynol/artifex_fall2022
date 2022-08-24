@@ -1,5 +1,7 @@
 # Data Processing
 
+To motivate this section on data processing, we will use the (fictional) data below that contains order information for a retail company. As is almost always the case, this data needs some pre-processing before it is in shape for exploration and analysis. Copy and paste the code below to obtain this data frame in your environment. The processing steps we carry out below rely on the <code>lubridate</code> package, so start your script with <code>library(lubridate)</code>.
+
 ```{r echo=TRUE}
 set.seed(1)
 customer = c("113 - Shaws", "217 - Shaws", "2114 - WalMart", "99 - WalMart",
@@ -10,19 +12,19 @@ product = c("WX1X - 9 gal - Jelly", "WX1P - 4 gal - Jelly",
 business_unit = c("123 Retail", "437 Consumer",
                   "990 International", "222 Retail",
                   "49 Consumer", "09 International") # number dash name
-#"1-1-2022" 
 
 df = data.frame(customer, product, business_unit, 
                 "1-1-2022" = rpois(6, 1100),
                 "2-1-2022" = rpois(6, 1200),
                 check.names = F)
-
 ```
 
 ```{r}
 kable(head(df),
       caption = 'A fake dataset on product shipments.')
 ```
+
+Our pre-processing of this particular dataset consists primarily of cleaning up the character variables and dealing with dates.  
 
 ## Cleaning up strings
 
@@ -56,7 +58,14 @@ For more on matching regular expressions in R, [see this document on the topic](
 
 **How can these two functions** (<code>str_sub</code>, <code>str_locate</code>) **be used in conjunction to deal with the first issue identified above? Try this out using the first entry from customer.**
 
-Then, str_split (simplify) ... then grab the things we care about
+Next, let's deal with the product variable. This variable contains two potentially useful pieces of information and one useless piece. They are separated by a dash. This presents a good use case for the <code>str_split</code> function. 
 
+```{r echo=TRUE, eval=FALSE}
+str_split("200:300", ":", simplify = T) # 200 300
+```
+
+**What should we split the product variable on?** 
+
+This will give us a matrix, with two useful columns. We want to grab these columns and include them in our data frame as <code>size</code> and <code>product</code>. [Refresher on how to carry out these sorts of tasks - How R thinks about data.](http://htmlpreview.github.io/?https://github.com/andrewpbray/oiLabs-base-R/blob/master/intro_to_data/intro_to_data.html)
 
 ## Dealing with dates
