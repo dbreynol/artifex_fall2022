@@ -1,7 +1,9 @@
+tab:unnamed-chunk-2
 welcome
 learn-all-about-bookdown
 data-processing
-including-plots
+cleaning-up-strings
+dealing-with-dates
 setup
 get-bookdown-tutorial-going-on-your-local-computer
 create-your-awesome-book-github-repo
