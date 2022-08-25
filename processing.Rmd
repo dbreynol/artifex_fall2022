@@ -1,5 +1,6 @@
 # Data Processing
 
+test?
 To motivate this section on data processing, we will use the (fictional) data below that contains order information for a retail company. As is almost always the case, this data needs some pre-processing before it is in shape for exploration and analysis. Copy and paste the code below to obtain this data frame in your environment. The processing steps we carry out below rely on the <code>lubridate</code> package, so start your script with <code>library(lubridate)</code>.
 
 ```{r echo=TRUE}
@@ -64,7 +65,7 @@ Next, let's deal with the product variable. This variable contains two potential
 str_split("200:300", ":", simplify = T) # 200 300
 ```
 
-**What should we split the product variable on?** 
+**What should we split the product variable on?**  
 
 This will give us a matrix, with two useful columns. We want to grab these columns and include them in our data frame as <code>size</code> and <code>product</code>. [Refresher on how to carry out these sorts of tasks - How R thinks about data.](http://htmlpreview.github.io/?https://github.com/andrewpbray/oiLabs-base-R/blob/master/intro_to_data/intro_to_data.html)
 
