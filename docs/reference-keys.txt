@@ -1,5 +1,4 @@
 tab:unnamed-chunk-3
-course-overview---artifex-fall-2022
 data-processing
 cleaning-up-strings
 dealing-with-dates
