@@ -1,6 +1,3 @@
-# Writing in Bookdown {#write}
+# Forecasting Models
 
-Coming soon: 
 
-- Adding chapters
-- Citations

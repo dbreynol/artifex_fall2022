@@ -23,7 +23,7 @@
 <meta name="author" content="David Reynolds" />
 
 
-<meta name="date" content="2022-08-25" />
+<meta name="date" content="2022-08-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="index.html"/>
-<link rel="next" href="setup.html"/>
+<link rel="next" href="exploratory-data-analysis.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -145,17 +145,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="data-processing.html"><a href="data-processing.html"><i class="fa fa-check"></i><b>1</b> Data Processing<span></span></a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="data-processing.html"><a href="data-processing.html#cleaning-up-strings"><i class="fa fa-check"></i><b>1.1</b> Cleaning up strings<span></span></a></li>
-<li class="chapter" data-level="1.2" data-path="data-processing.html"><a href="data-processing.html#dealing-with-dates"><i class="fa fa-check"></i><b>1.2</b> Dealing with dates<span></span></a></li>
+<li class="chapter" data-level="1.2" data-path="data-processing.html"><a href="data-processing.html#assignment-1"><i class="fa fa-check"></i><b>1.2</b> Assignment 1<span></span></a></li>
+<li class="chapter" data-level="1.3" data-path="data-processing.html"><a href="data-processing.html#dealing-with-dates"><i class="fa fa-check"></i><b>1.3</b> Dealing with dates<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>2</b> Setting up Bookdown<span></span></a>
-<ul>
-<li class="chapter" data-level="2.1" data-path="setup.html"><a href="setup.html#get-bookdown-tutorial-going-on-your-local-computer"><i class="fa fa-check"></i><b>2.1</b> Get “bookdown-tutorial” going on your local computer<span></span></a></li>
-<li class="chapter" data-level="2.2" data-path="setup.html"><a href="setup.html#create-your-awesome-book-github-repo"><i class="fa fa-check"></i><b>2.2</b> Create your “awesome-book” GitHub repo<span></span></a></li>
-<li class="chapter" data-level="2.3" data-path="setup.html"><a href="setup.html#turn-bookdown-tutorial-into-awesome-book"><i class="fa fa-check"></i><b>2.3</b> Turn “bookdown-tutorial” into “awesome-book”<span></span></a></li>
-<li class="chapter" data-level="2.4" data-path="setup.html"><a href="setup.html#publish-awesome-book"><i class="fa fa-check"></i><b>2.4</b> Publish “awesome-book”<span></span></a></li>
-<li class="chapter" data-level="2.5" data-path="setup.html"><a href="setup.html#moving-forward"><i class="fa fa-check"></i><b>2.5</b> Moving forward<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="write.html"><a href="write.html"><i class="fa fa-check"></i><b>3</b> Writing in Bookdown<span></span></a></li>
+<li class="chapter" data-level="2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>2</b> Exploratory Data Analysis<span></span></a></li>
+<li class="chapter" data-level="3" data-path="forecasting-models.html"><a href="forecasting-models.html"><i class="fa fa-check"></i><b>3</b> Forecasting Models<span></span></a></li>
 <li class="divider"></li>
 <li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
 
@@ -178,8 +172,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="data-processing" class="section level1 hasAnchor" number="1">
 <h1><span class="header-section-number">Chapter 1</span> Data Processing<a href="data-processing.html#data-processing" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>test?
-To motivate this section on data processing, we will use the (fictional) data below that contains order information for a retail company. As is almost always the case, this data needs some pre-processing before it is in shape for exploration and analysis. Copy and paste the code below to obtain this data frame in your environment. The processing steps we carry out below rely on the <code>lubridate</code> package, so start your script with <code>library(lubridate)</code>.</p>
+<p>To motivate this section on data processing, we will use the (fictional) data below that contains order information for a retail company. As is almost always the case, this data needs some pre-processing before it is in shape for exploration and analysis. Copy and paste the code below to obtain this data frame in your environment. The processing steps we carry out below rely on the <code>lubridate</code> package, so start your script with <code>library(lubridate)</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="data-processing.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
 <span id="cb1-2"><a href="data-processing.html#cb1-2" aria-hidden="true" tabindex="-1"></a>customer <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;113 - Shaws&quot;</span>, <span class="st">&quot;217 - Shaws&quot;</span>, <span class="st">&quot;2114 - WalMart&quot;</span>, <span class="st">&quot;99 - WalMart&quot;</span>,</span>
 <span id="cb1-3"><a href="data-processing.html#cb1-3" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;23 - CVS&quot;</span>, <span class="st">&quot;09 - CVS&quot;</span>) <span class="co"># numbers dash name</span></span>
@@ -250,10 +243,11 @@ To motivate this section on data processing, we will use the (fictional) data be
 </tr>
 </tbody>
 </table>
-<p>Our pre-processing of this particular dataset consists primarily of cleaning up the character variables and dealing with dates.</p>
+<p>Our pre-processing of this particular dataset consists primarily of cleaning up the character (string) variables and dealing with dates.</p>
 <div id="cleaning-up-strings" class="section level2 hasAnchor" number="1.1">
 <h2><span class="header-section-number">1.1</span> Cleaning up strings<a href="data-processing.html#cleaning-up-strings" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Some aspects of this dataset that are distracting for analysis include:</p>
+<p>For a reference on the use of strings in R, see this <a href="https://r4ds.had.co.nz/strings.html#strings">excellent resource</a>.</p>
+<p>For the purpose of our analysis, some aspects of this dataset that are distracting for analysis include:</p>
 <ol style="list-style-type: decimal">
 <li>The meaningless (to us) numbers that precede the customer name and business unit.</li>
 <li>The meaningless letters that precede the product description.</li>
@@ -261,22 +255,87 @@ To motivate this section on data processing, we will use the (fictional) data be
 </ol>
 <p>Let’s work through each of these using the functions <code>str_sub</code>, <code>str_locate</code>, and <code>str_split</code>. Let’s first go over what these functions do and how they can be used for this task.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="data-processing.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_sub</span>(<span class="st">&quot;The big short&quot;</span>, <span class="at">start =</span> <span class="dv">5</span>, <span class="at">end =</span> <span class="dv">7</span>) <span class="co"># big</span></span>
-<span id="cb2-2"><a href="data-processing.html#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="data-processing.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># the input can also be a vector</span></span>
-<span id="cb2-4"><a href="data-processing.html#cb2-4" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Apple&quot;</span>, <span class="st">&quot;Banana&quot;</span>, <span class="st">&quot;Pear&quot;</span>) <span class="co"># character vector</span></span>
-<span id="cb2-5"><a href="data-processing.html#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str_sub</span>(x, <span class="dv">1</span>, <span class="dv">3</span>) <span class="co"># &quot;App&quot; &quot;Ban&quot; &quot;Pea&quot;</span></span></code></pre></div>
+<span id="cb2-2"><a href="data-processing.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># the input can also be a vector</span></span>
+<span id="cb2-3"><a href="data-processing.html#cb2-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Apple&quot;</span>, <span class="st">&quot;Banana&quot;</span>, <span class="st">&quot;Pear&quot;</span>) <span class="co"># character vector</span></span>
+<span id="cb2-4"><a href="data-processing.html#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str_sub</span>(x, <span class="dv">1</span>, <span class="dv">3</span>) <span class="co"># &quot;App&quot; &quot;Ban&quot; &quot;Pea&quot;</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="data-processing.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_locate</span>(<span class="st">&quot;This&quot;</span>, <span class="st">&quot;s&quot;</span>) <span class="co"># gives the starting and ending position of the &#39;s&#39; in &#39;This&#39;</span></span></code></pre></div>
+<p><strong>How can these two functions</strong> (<code>str_sub</code>, <code>str_locate</code>) <strong>be used in conjunction to deal with the first issue identified above? Try this out using the first entry from customer.</strong></p>
 <p>The patterns that are located can be much more general than a literal letter. These patters are known as regular expressions. For example, suppose we would like to locate the part of the string that consists of the letter a followed by any number. The regular expression that represents any digit is <code>\d</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="data-processing.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_locate</span>(<span class="st">&quot;aardvark a3&quot;</span>, <span class="st">&quot;a</span><span class="sc">\\</span><span class="st">d&quot;</span>) <span class="co"># 10 11</span></span></code></pre></div>
 <p>For more on matching regular expressions in R, <a href="https://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions">see this document on the topic</a>.</p>
-<p><strong>How can these two functions</strong> (<code>str_sub</code>, <code>str_locate</code>) <strong>be used in conjunction to deal with the first issue identified above? Try this out using the first entry from customer.</strong></p>
-<p>Next, let’s deal with the product variable. This variable contains two potentially useful pieces of information and one useless piece. They are separated by a dash. This presents a good use case for the <code>str_split</code> function.</p>
+<p>Next, let’s deal with the product variable. This variable contains two potentially useful pieces of information and one useless piece. They are separated by a dash. This presents a good use case for the <code>str_split</code> function. Here is an example where we have two data points that are separated by a colon and we would like to extract them.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="data-processing.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_split</span>(<span class="st">&quot;200:300&quot;</span>, <span class="st">&quot;:&quot;</span>, <span class="at">simplify =</span> T) <span class="co"># 200 300</span></span></code></pre></div>
 <p><strong>What should we split the product variable on?</strong></p>
-<p>This will give us a matrix, with two useful columns. We want to grab these columns and include them in our data frame as <code>size</code> and <code>product</code>. <a href="http://htmlpreview.github.io/?https://github.com/andrewpbray/oiLabs-base-R/blob/master/intro_to_data/intro_to_data.html">Refresher on how to carry out these sorts of tasks - How R thinks about data.</a></p>
+<p>This will give us a matrix, with two useful columns. We want to grab these columns and include them in our data frame as <code>size</code> and <code>product_name</code>. <a href="http://htmlpreview.github.io/?https://github.com/andrewpbray/oiLabs-base-R/blob/master/intro_to_data/intro_to_data.html">Refresher on how to carry out these sorts of tasks - How R thinks about data.</a></p>
 </div>
-<div id="dealing-with-dates" class="section level2 hasAnchor" number="1.2">
-<h2><span class="header-section-number">1.2</span> Dealing with dates<a href="data-processing.html#dealing-with-dates" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="assignment-1" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Assignment 1<a href="data-processing.html#assignment-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Use the functions described above (<code>str_sub</code>, <code>str_locate</code>, and <code>str_split</code>) to obtain the following cleaned up data frame.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">customer</th>
+<th align="left">product</th>
+<th align="left">business_unit</th>
+<th align="right">1-1-2022</th>
+<th align="right">2-1-2022</th>
+<th align="left">size</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Shaws</td>
+<td align="left">Jelly</td>
+<td align="left">Retail</td>
+<td align="right">1079</td>
+<td align="right">1225</td>
+<td align="left">9 gal</td>
+</tr>
+<tr class="even">
+<td align="left">Shaws</td>
+<td align="left">Jelly</td>
+<td align="left">Consumer</td>
+<td align="right">1144</td>
+<td align="right">1219</td>
+<td align="left">4 gal</td>
+</tr>
+<tr class="odd">
+<td align="left">WalMart</td>
+<td align="left">Grape Juice</td>
+<td align="left">International</td>
+<td align="right">1142</td>
+<td align="right">1189</td>
+<td align="left">11 gal</td>
+</tr>
+<tr class="even">
+<td align="left">WalMart</td>
+<td align="left">Fruit Juice</td>
+<td align="left">Retail</td>
+<td align="right">1113</td>
+<td align="right">1172</td>
+<td align="left">7 gal</td>
+</tr>
+<tr class="odd">
+<td align="left">CVS</td>
+<td align="left">Peanut Butter</td>
+<td align="left">Consumer</td>
+<td align="right">1048</td>
+<td align="right">1178</td>
+<td align="left">1 gal</td>
+</tr>
+<tr class="even">
+<td align="left">CVS</td>
+<td align="left">Jam</td>
+<td align="left">International</td>
+<td align="right">1116</td>
+<td align="right">1189</td>
+<td align="left">2 gal</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="dealing-with-dates" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Dealing with dates<a href="data-processing.html#dealing-with-dates" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 
 </div>
 </div>
@@ -286,7 +345,7 @@ To motivate this section on data processing, we will use the (fictional) data be
         </div>
       </div>
 <a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="setup.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="exploratory-data-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

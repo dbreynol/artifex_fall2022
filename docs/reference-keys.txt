@@ -1,11 +1,7 @@
 tab:unnamed-chunk-3
 data-processing
 cleaning-up-strings
+assignment-1
 dealing-with-dates
-setup
-get-bookdown-tutorial-going-on-your-local-computer
-create-your-awesome-book-github-repo
-turn-bookdown-tutorial-into-awesome-book
-publish-awesome-book
-moving-forward
-write
+exploratory-data-analysis
+forecasting-models

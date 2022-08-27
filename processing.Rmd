@@ -1,6 +1,5 @@
 # Data Processing
 
-test?
 To motivate this section on data processing, we will use the (fictional) data below that contains order information for a retail company. As is almost always the case, this data needs some pre-processing before it is in shape for exploration and analysis. Copy and paste the code below to obtain this data frame in your environment. The processing steps we carry out below rely on the <code>lubridate</code> package, so start your script with <code>library(lubridate)</code>.
 
 ```{r echo=TRUE}
@@ -25,11 +24,13 @@ kable(head(df),
       caption = 'A fake dataset on product shipments.')
 ```
 
-Our pre-processing of this particular dataset consists primarily of cleaning up the character variables and dealing with dates.  
+Our pre-processing of this particular dataset consists primarily of cleaning up the character (string) variables and dealing with dates.  
 
 ## Cleaning up strings
 
-Some aspects of this dataset that are distracting for analysis include:
+For a reference on the use of strings in R, see this [excellent resource](https://r4ds.had.co.nz/strings.html#strings).
+
+For the purpose of our analysis, some aspects of this dataset that are distracting for analysis include:
 
 1. The meaningless (to us) numbers that precede the customer name and business unit. 
 2. The meaningless letters that precede the product description.
@@ -39,7 +40,6 @@ Let's work through each of these using the functions <code>str_sub</code>, <code
 
 ```{r echo=TRUE, eval=FALSE}
 str_sub("The big short", start = 5, end = 7) # big
-
 # the input can also be a vector
 x <- c("Apple", "Banana", "Pear") # character vector
 str_sub(x, 1, 3) # "App" "Ban" "Pea"
@@ -49,6 +49,8 @@ str_sub(x, 1, 3) # "App" "Ban" "Pea"
 str_locate("This", "s") # gives the starting and ending position of the 's' in 'This'
 ```
 
+**How can these two functions** (<code>str_sub</code>, <code>str_locate</code>) **be used in conjunction to deal with the first issue identified above? Try this out using the first entry from customer.**
+
 The patterns that are located can be much more general than a literal letter. These patters are known as regular expressions. For example, suppose we would like to locate the part of the string that consists of the letter a followed by any number. The regular expression that represents any digit is <code>\\d</code>.
 
 ```{r echo=TRUE, eval=FALSE}
@@ -57,9 +59,7 @@ str_locate("aardvark a3", "a\\d") # 10 11
 
 For more on matching regular expressions in R, [see this document on the topic](https://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions). 
 
-**How can these two functions** (<code>str_sub</code>, <code>str_locate</code>) **be used in conjunction to deal with the first issue identified above? Try this out using the first entry from customer.**
-
-Next, let's deal with the product variable. This variable contains two potentially useful pieces of information and one useless piece. They are separated by a dash. This presents a good use case for the <code>str_split</code> function. 
+Next, let's deal with the product variable. This variable contains two potentially useful pieces of information and one useless piece. They are separated by a dash. This presents a good use case for the <code>str_split</code> function. Here is an example where we have two data points that are separated by a colon and we would like to extract them.
 
 ```{r echo=TRUE, eval=FALSE}
 str_split("200:300", ":", simplify = T) # 200 300
@@ -67,6 +67,23 @@ str_split("200:300", ":", simplify = T) # 200 300
 
 **What should we split the product variable on?**  
 
-This will give us a matrix, with two useful columns. We want to grab these columns and include them in our data frame as <code>size</code> and <code>product</code>. [Refresher on how to carry out these sorts of tasks - How R thinks about data.](http://htmlpreview.github.io/?https://github.com/andrewpbray/oiLabs-base-R/blob/master/intro_to_data/intro_to_data.html)
+This will give us a matrix, with two useful columns. We want to grab these columns and include them in our data frame as <code>size</code> and <code>product_name</code>. [Refresher on how to carry out these sorts of tasks - How R thinks about data.](http://htmlpreview.github.io/?https://github.com/andrewpbray/oiLabs-base-R/blob/master/intro_to_data/intro_to_data.html)
+
+## Assignment 1
+
+Use the functions described above (<code>str_sub</code>, <code>str_locate</code>, and <code>str_split</code>) to obtain the following cleaned up data frame.
+
+```{r}
+
+df2 = df %>% mutate(customer = str_sub(customer, start = str_locate(customer, "-")[,1] + 2)) %>%
+  mutate(size = str_split(product, " - ", simplify = T)[,2]) %>%
+  mutate(product = str_split(product, " - ", simplify = T)[,3]) %>%
+  mutate(business_unit = str_sub(business_unit, start = str_locate(business_unit, "\\d+ ")[,2] + 1)) #%>%
+  #select(-product)
+
+kable(head(df2))
+
+```
+
 
 ## Dealing with dates

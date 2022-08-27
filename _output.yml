@@ -7,10 +7,10 @@ bookdown::gitbook:
   config:
     toc:
       before: |
-        <li><a href="./">Mini Bookdown Tutorial</a></li>
-      after: |
-        <li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
-    edit: https://github.com/jules32/bookdown-tutorial/edit/master/%s
+        <li><a href="./">Artifex Fall 2022</a></li>
+#      after: |
+#        <li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+    edit: https://github.com/dbreynol/artifex_fall2022/edit/master/%s
     download: ["pdf"]
 #bookdown::pdf_book:
 #  includes:
