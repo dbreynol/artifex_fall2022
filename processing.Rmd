@@ -85,5 +85,10 @@ kable(head(df2))
 
 ```
 
-
 ## Dealing with dates
+
+The output from assigment one gets us pretty close to our desired analytic dataset. However, it turns out that for our analysis we would like the data to be in *long* format. 
+
+
+
+
