@@ -71,7 +71,7 @@ This will give us a matrix, with two useful columns. We want to grab these colum
 
 ## Assignment 1
 
-Use the functions described above (<code>str_sub</code>, <code>str_locate</code>, and <code>str_split</code>) to obtain the following cleaned up data frame.
+1. Use the functions described above (<code>str_sub</code>, <code>str_locate</code>, and <code>str_split</code>) to obtain the following cleaned up data frame.
 
 ```{r}
 
@@ -85,5 +85,19 @@ kable(head(df2))
 
 ```
 
-
 ## Dealing with dates
+
+The output from assigment one gets us pretty close to our desired analytic dataset. However, it turns out that for our analysis we would like the data to be in *long* format, where each row contains information on a single month. So, the first row of the dataset would have the January 2022 units of 9 gal Jelly shipped to Shaw's. This is achieved using the function <code>pivot_longer</code>. [Let's take a look at the example from the documentation](https://tidyr.tidyverse.org/reference/pivot_longer.html) to figure out what parameters to use to achieve this.
+
+Once you figure out the appropriate arguments for <code>pivot_longer</code>, the <code>head</code> of your new data frame should look like this:
+
+
+```{r}
+# pivot_longer(df2, cols = c(`1-1-2022`,`2-1-2022`), names_to = "month", values_to = "units")
+kable(head(pivot_longer(df2, cols = matches("\\d"), names_to = "month", values_to = "units")))
+```
+
+
+
+
+
