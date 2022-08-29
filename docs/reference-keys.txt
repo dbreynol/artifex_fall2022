@@ -2,6 +2,5 @@ tab:unnamed-chunk-3
 data-processing
 cleaning-up-strings
 assignment-1
-dealing-with-dates
 exploratory-data-analysis
 forecasting-models

@@ -85,19 +85,22 @@ kable(head(df2))
 
 ```
 
-## Dealing with dates
-
-The output from assigment one gets us pretty close to our desired analytic dataset. However, it turns out that for our analysis we would like the data to be in *long* format, where each row contains information on a single month. So, the first row of the dataset would have the January 2022 units of 9 gal Jelly shipped to Shaw's. This is achieved using the function <code>pivot_longer</code>. [Let's take a look at the example from the documentation](https://tidyr.tidyverse.org/reference/pivot_longer.html) to figure out what parameters to use to achieve this.
+2. **Dealing with dates (part 1)**. The output from part one gets us pretty close to our desired analytic dataset. However, it turns out that for our analysis we would like the data to be in *long* format, where each row contains information on a single month. So, the first row of the dataset would have the January 2022 units of 9 gal Jelly shipped to Shaw's. This is achieved using the function <code>pivot_longer</code>. [Let's take a look at the example from the documentation](https://tidyr.tidyverse.org/reference/pivot_longer.html) to figure out what parameters to use to achieve this
 
 Once you figure out the appropriate arguments for <code>pivot_longer</code>, the <code>head</code> of your new data frame should look like this:
 
+```{r}
+# pivot_longer(df2, cols = c(`1-1-2022`,`2-1-2022`), names_to = "month", values_to = "units")
+df3 = pivot_longer(df2, cols = matches("\\d"), names_to = "month", values_to = "units")
+kable(head(df3))
+```
+
+3. **Dealing with dates (part 2)**. Finally, we want R to recognize our <code>month</code> variable as a date (rather than a character). A helpful package for dates is <code>lubridate</code>. Download and load this package into your workspace and use the function <code>mdy</code> on the <code>month</code> variable to coerce this variable to become a date. The <code>str</code> of your data frame should now look like this:
 
 ```{r}
 # pivot_longer(df2, cols = c(`1-1-2022`,`2-1-2022`), names_to = "month", values_to = "units")
-kable(head(pivot_longer(df2, cols = matches("\\d"), names_to = "month", values_to = "units")))
+df3 = mutate(df3, month = mdy(month))
+kable(str(df3))
 ```
 
-
-
-
-
+Notice how the month variable has format *Date*. Your data frame is now ready for exploration and analysis!
