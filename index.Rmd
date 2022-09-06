@@ -17,6 +17,7 @@ knitr::opts_chunk$set(echo = F)
 library(tidyverse)
 library(lubridate)
 library(knitr)
+library(nycflights13)
 ```
 
 # Course Overview - Artifex Fall 2022 {-}
