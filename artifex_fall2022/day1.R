@@ -80,3 +80,31 @@ str_locate("QP1X - 11 l - Grape Juice", "gal - ") # str_split
 str_locate("QP1X - 11 l - Grape Juice", "gal - ") # str_split 
 
 
+library(nycflights13)
+library(tidyverse)
+
+a = flights[1:20,]  %>%  group_by(carrier) %>% mutate(m = mean(dep_delay)) #%>% ungroup()
+
+
+
+# one row for each combination of groupings
+flights %>% 
+  group_by(carrier, origin) %>% 
+  summarize(m = mean(dep_delay, na.rm = T)) %>% 
+  arrange(desc(m))
+
+
+
+urlfile<-'https://raw.githubusercontent.com/dbreynol/admn510_data/main/cdc.csv'
+dsin<-read.csv(url(urlfile))
+
+
+
+
+
+
+
+
+
+
+

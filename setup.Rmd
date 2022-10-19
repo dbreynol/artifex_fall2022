@@ -75,9 +75,11 @@ f. Were delayed by at least an hour, but made up over 30 minutes in flight
 
 2. Add two new variables to flights that convert <code>dep_time</code> and <code>arr_time</code> to a more convenient representation of number of minutes since midnight.
 
-3. Look at the number of canceled flights per day. Is there a pattern over the course of the year? How about the proportion of cancelled flights over the course of the year?
+3. Look at the number of canceled flights per day. Is there a pattern over the course of the year? How about the proportion of canceled flights over the course of the year?
 
 4. What time of day should you fly if you want to avoid delays as much as possible?
+
+
 
 
 
