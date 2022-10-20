@@ -188,7 +188,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb13-7"><a href="time-series.html#cb13-7" aria-hidden="true" tabindex="-1"></a>y_ts <span class="ot">=</span> <span class="fu">ts</span>(df<span class="sc">$</span>y, <span class="at">frequency =</span> <span class="dv">4</span>) <span class="co"># make your data into a time series object</span></span>
 <span id="cb13-8"><a href="time-series.html#cb13-8" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>trend <span class="ot">=</span> <span class="fu">ma</span>(y_ts, <span class="at">order =</span> <span class="dv">4</span>) <span class="co"># use the ma function from the forecast library</span></span></code></pre></div>
 <p>Second, let’s get the seasonal component.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="time-series.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. subtract the trend</span></span>
+<span id="cb14-2"><a href="time-series.html#cb14-2" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>detrend <span class="ot">=</span> df<span class="sc">$</span>y <span class="sc">-</span> df<span class="sc">$</span>trend</span>
+<span id="cb14-3"><a href="time-series.html#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="time-series.html#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. group by quarter and take the average of the de-trended values</span></span>
+<span id="cb14-5"><a href="time-series.html#cb14-5" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> df <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(quarter) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">S =</span> <span class="fu">mean</span>(detrend, <span class="at">na.rm =</span> T)) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">!</span>detrend)</span></code></pre></div>
 <p>Finally, the random component is calculated by subtracting the estimated seasonal and trend-cycle components.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="time-series.html#cb15-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">mutate</span>(df, <span class="at">R =</span> y <span class="sc">-</span> trend <span class="sc">-</span> S)</span></code></pre></div>
 
 </div>
             </section>

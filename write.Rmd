@@ -20,7 +20,7 @@ df$trend = ma(y_ts, order = 4) # use the ma function from the forecast library
 
 Second, let's get the seasonal component.
 
-```{r, echo=FALSE}
+```{r, echo=T}
 # 1. subtract the trend
 df$detrend = df$y - df$trend
 
@@ -30,7 +30,7 @@ df = df %>% group_by(quarter) %>% mutate(S = mean(detrend, na.rm = T)) %>% selec
 
 Finally, the random component is calculated by subtracting the estimated seasonal and trend-cycle components.
 
-```{r}
+```{r, echo=TRUE}
 df = mutate(df, R = y - trend - S)
 ```
 
