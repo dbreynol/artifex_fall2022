@@ -196,6 +196,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Finally, the random component is calculated by subtracting the estimated seasonal and trend-cycle components.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="time-series.html#cb15-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">mutate</span>(df, <span class="at">R =</span> y <span class="sc">-</span> trend <span class="sc">-</span> S)</span></code></pre></div>
 <p>Now, plot each line:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="time-series.html#cb16-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="time-series.html#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">!</span>(<span class="fu">c</span>(<span class="st">&quot;quarter&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;id&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-3"><a href="time-series.html#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(id, value, <span class="at">color =</span> name)) <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <pre><code>## Warning: Removed 8 row(s) containing missing values (geom_path).</code></pre>
 <p><img src="series_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 

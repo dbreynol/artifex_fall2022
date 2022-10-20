@@ -36,7 +36,7 @@ df = mutate(df, R = y - trend - S)
 
 Now, plot each line:
 
-```{r}
+```{r echo=TRUE}
 df %>% 
   pivot_longer(!(c("quarter", "year", "id"))) %>% 
   ggplot(aes(id, value, color = name)) + geom_line() + theme_minimal()
