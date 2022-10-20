@@ -34,6 +34,13 @@ Finally, the random component is calculated by subtracting the estimated seasona
 df = mutate(df, R = y - trend - S)
 ```
 
+Now, plot each line:
+
+```{r}
+df %>% 
+  pivot_longer(!(c("quarter", "year", "id"))) %>% 
+  ggplot(aes(id, value, color = name)) + geom_line() + theme_minimal()
+```
 
 
 

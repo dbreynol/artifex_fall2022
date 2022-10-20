@@ -195,6 +195,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb14-5"><a href="time-series.html#cb14-5" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> df <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(quarter) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">S =</span> <span class="fu">mean</span>(detrend, <span class="at">na.rm =</span> T)) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">!</span>detrend)</span></code></pre></div>
 <p>Finally, the random component is calculated by subtracting the estimated seasonal and trend-cycle components.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="time-series.html#cb15-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">mutate</span>(df, <span class="at">R =</span> y <span class="sc">-</span> trend <span class="sc">-</span> S)</span></code></pre></div>
+<p>Now, plot each line:</p>
+<pre><code>## Warning: Removed 8 row(s) containing missing values (geom_path).</code></pre>
+<p><img src="series_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 
 </div>
             </section>
