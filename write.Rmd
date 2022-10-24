@@ -1,44 +1,47 @@
 # Time Series
 
-We want to decompose our time series into three parts: a trend component, a seasonality component, and a random component. That is, for each observation $Y_t$, we want to break it down into three parts:
+We want to decompose our time series into three parts: a trend component ($T$), a seasonality component ($S$), and a random component ($R$). That is, for each observation $Y_t$, we want to break it down into three parts:
 
 $Y_T = T_t + S_t + R_t$
 
 First, let's talk about the trend component. The trend component is a moving average.
 
 ```{r echo=TRUE}
+set.seed(1)
+df = data.frame( invoiced = round(rnorm(52 * 3, mean = 100, sd = 30), 0), 
+                 week_no = rep(1:52, 3), # week number
+                 id = 1:(52 * 3))
 
-df = data.frame( y = c(1,2,3,4,5,4,3,2,1, 1, 2, 2), 
-                 quarter = rep(c("Q1", "Q2", "Q3", "Q4"), 3),
-                 year = rep(c(2018, 2019, 2020), each = 4), 
-                 id = 1:12)
 
-
-y_ts = ts(df$y, frequency = 4) # make your data into a time series object
-df$trend = ma(y_ts, order = 4) # use the ma function from the forecast library
+y_ts = ts(df$invoiced, frequency = 52) # make your data into a time series object
+df$trend = ma(y_ts, order = 52) # use the ma function from the forecast library
 ```
 
 Second, let's get the seasonal component.
 
 ```{r, echo=T}
 # 1. subtract the trend
-df$detrend = df$y - df$trend
+df$detrend = df$invoiced - df$trend
 
 # 2. group by quarter and take the average of the de-trended values
-df = df %>% group_by(quarter) %>% mutate(S = mean(detrend, na.rm = T)) %>% select(!detrend)
+df = df %>% group_by(week_no) %>% 
+  mutate(S1 = mean(detrend, na.rm = T)) %>% 
+  ungroup() %>% 
+  mutate(S = S1 - mean(S1)) %>% # make sure the sum of the seasonal components is 0
+  select(!c(detrend, S1))
 ```
 
 Finally, the random component is calculated by subtracting the estimated seasonal and trend-cycle components.
 
 ```{r, echo=TRUE}
-df = mutate(df, R = y - trend - S)
+df = mutate(df, R = invoiced - trend - S)
 ```
 
 Now, plot each line:
 
 ```{r echo=TRUE}
 df %>% 
-  pivot_longer(!(c("quarter", "year", "id"))) %>% 
+  pivot_longer(!(c("week_no", "id"))) %>% 
   ggplot(aes(id, value, color = name)) + geom_line() + theme_minimal()
 ```
 
