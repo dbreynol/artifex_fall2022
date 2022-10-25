@@ -23,7 +23,7 @@
 <meta name="author" content="David Reynolds" />
 
 
-<meta name="date" content="2022-10-24" />
+<meta name="date" content="2022-10-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -178,26 +178,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 3</span> Time Series<a href="time-series.html#time-series" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>We want to decompose our time series into three parts: a trend component (<span class="math inline">\(T\)</span>), a seasonality component (<span class="math inline">\(S\)</span>), and a random component (<span class="math inline">\(R\)</span>). That is, for each observation <span class="math inline">\(Y_t\)</span>, we want to break it down into three parts:</p>
 <p><span class="math inline">\(Y_T = T_t + S_t + R_t\)</span></p>
-<p>First, let’s talk about the trend component. The trend component is a moving average.</p>
+<p>First, let’s talk about the trend component (T). The trend component is a moving average, which you can obtain using the <code>ma</code> function within the <em>forecast</em> library.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="time-series.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb13-2"><a href="time-series.html#cb13-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>( <span class="at">invoiced =</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="dv">52</span> <span class="sc">*</span> <span class="dv">3</span>, <span class="at">mean =</span> <span class="dv">100</span>, <span class="at">sd =</span> <span class="dv">30</span>), <span class="dv">0</span>), </span>
-<span id="cb13-3"><a href="time-series.html#cb13-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">week_no =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">52</span>, <span class="dv">3</span>), <span class="co"># week number</span></span>
-<span id="cb13-4"><a href="time-series.html#cb13-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span>(<span class="dv">52</span> <span class="sc">*</span> <span class="dv">3</span>))</span>
+<span id="cb13-2"><a href="time-series.html#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="time-series.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># generate some fake data that resembles our real dataset (noce the week_no variable, which </span></span>
+<span id="cb13-4"><a href="time-series.html#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># corresponds with the enterprise week number from your original data)</span></span>
 <span id="cb13-5"><a href="time-series.html#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="time-series.html#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="time-series.html#cb13-7" aria-hidden="true" tabindex="-1"></a>y_ts <span class="ot">=</span> <span class="fu">ts</span>(df<span class="sc">$</span>invoiced, <span class="at">frequency =</span> <span class="dv">52</span>) <span class="co"># make your data into a time series object</span></span>
-<span id="cb13-8"><a href="time-series.html#cb13-8" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>trend <span class="ot">=</span> <span class="fu">ma</span>(y_ts, <span class="at">order =</span> <span class="dv">52</span>) <span class="co"># use the ma function from the forecast library</span></span></code></pre></div>
-<p>Second, let’s get the seasonal component.</p>
+<span id="cb13-6"><a href="time-series.html#cb13-6" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>( <span class="at">invoiced =</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="dv">52</span> <span class="sc">*</span> <span class="dv">3</span>, <span class="at">mean =</span> <span class="dv">100</span>, <span class="at">sd =</span> <span class="dv">30</span>), <span class="dv">0</span>), </span>
+<span id="cb13-7"><a href="time-series.html#cb13-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">week_no =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">52</span>, <span class="dv">3</span>), <span class="co"># week number</span></span>
+<span id="cb13-8"><a href="time-series.html#cb13-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span>(<span class="dv">52</span> <span class="sc">*</span> <span class="dv">3</span>)) </span>
+<span id="cb13-9"><a href="time-series.html#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="time-series.html#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="time-series.html#cb13-11" aria-hidden="true" tabindex="-1"></a>y_ts <span class="ot">=</span> <span class="fu">ts</span>(df<span class="sc">$</span>invoiced, <span class="at">frequency =</span> <span class="dv">52</span>) <span class="co"># make your data into a time series object</span></span>
+<span id="cb13-12"><a href="time-series.html#cb13-12" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>trend <span class="ot">=</span> <span class="fu">ma</span>(y_ts, <span class="at">order =</span> <span class="dv">52</span>) <span class="co"># use the ma function from the forecast library</span></span></code></pre></div>
+<p>Now that we have added a trend variable to our data frame, let’s get the seasonal (<span class="math inline">\(S\)</span>) component. To estimate the seasonal component for each week, simply average the detrended values for that week. These seasonal component values are then adjusted to ensure that they add to zero.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="time-series.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. subtract the trend</span></span>
 <span id="cb14-2"><a href="time-series.html#cb14-2" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>detrend <span class="ot">=</span> df<span class="sc">$</span>invoiced <span class="sc">-</span> df<span class="sc">$</span>trend</span>
 <span id="cb14-3"><a href="time-series.html#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="time-series.html#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. group by quarter and take the average of the de-trended values</span></span>
+<span id="cb14-4"><a href="time-series.html#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. group by week number and take the average of the de-trended values</span></span>
 <span id="cb14-5"><a href="time-series.html#cb14-5" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> df <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(week_no) <span class="sc">%&gt;%</span> </span>
 <span id="cb14-6"><a href="time-series.html#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">S1 =</span> <span class="fu">mean</span>(detrend, <span class="at">na.rm =</span> T)) <span class="sc">%&gt;%</span> </span>
 <span id="cb14-7"><a href="time-series.html#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb14-8"><a href="time-series.html#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">S =</span> S1 <span class="sc">-</span> <span class="fu">mean</span>(S1)) <span class="sc">%&gt;%</span> <span class="co"># make sure the sum of the seasonal components is 0</span></span>
 <span id="cb14-9"><a href="time-series.html#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>(detrend, S1))</span></code></pre></div>
-<p>Finally, the random component is calculated by subtracting the estimated seasonal and trend-cycle components.</p>
+<p>Finally, the random component is calculated by subtracting the estimated seasonal and trend-cycle components. That is,</p>
+<p><span class="math inline">\(R_t = Y_t - T_t - S_t\)</span>.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="time-series.html#cb15-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">mutate</span>(df, <span class="at">R =</span> invoiced <span class="sc">-</span> trend <span class="sc">-</span> S)</span></code></pre></div>
 <p>Now, plot each line:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="time-series.html#cb16-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
