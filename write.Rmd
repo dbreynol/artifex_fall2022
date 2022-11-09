@@ -1,5 +1,7 @@
 # Time Series
 
+## Decomposition
+
 We want to decompose our time series into three parts: a trend component ($T$), a seasonality component ($S$), and a random component ($R$). That is, for each observation $Y_t$, we want to break it down into three parts:
 
 $Y_T = T_t + S_t + R_t$
@@ -48,8 +50,10 @@ Now, plot each line:
 ```{r echo=TRUE}
 df %>% 
   pivot_longer(!(c("week_no", "id"))) %>% 
-  ggplot(aes(id, value, color = name)) + geom_line() + theme_minimal()
+  ggplot(aes(id, value, color = name)) + 
+  geom_line() + 
+  theme_minimal() + 
+  ggtitle("Decomposition of invoiced time series")
 ```
 
-
-
+## Forecasting

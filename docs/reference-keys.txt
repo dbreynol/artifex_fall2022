@@ -10,3 +10,5 @@ mutate
 group-by-summarise
 assignment-2
 time-series
+decomposition
+forecasting

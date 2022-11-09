@@ -23,7 +23,7 @@
 <meta name="author" content="David Reynolds" />
 
 
-<meta name="date" content="2022-10-25" />
+<meta name="date" content="2022-11-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -156,7 +156,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.5" data-path="data-manipulation.html"><a href="data-manipulation.html#group-by-summarise"><i class="fa fa-check"></i><b>2.5</b> Group-By/ Summarise<span></span></a></li>
 <li class="chapter" data-level="2.6" data-path="data-manipulation.html"><a href="data-manipulation.html#assignment-2"><i class="fa fa-check"></i><b>2.6</b> Assignment 2<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="time-series.html"><a href="time-series.html"><i class="fa fa-check"></i><b>3</b> Time Series<span></span></a></li>
+<li class="chapter" data-level="3" data-path="time-series.html"><a href="time-series.html"><i class="fa fa-check"></i><b>3</b> Time Series<span></span></a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="time-series.html"><a href="time-series.html#decomposition"><i class="fa fa-check"></i><b>3.1</b> Decomposition<span></span></a></li>
+<li class="chapter" data-level="3.2" data-path="time-series.html"><a href="time-series.html#forecasting"><i class="fa fa-check"></i><b>3.2</b> Forecasting<span></span></a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -176,6 +180,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="time-series" class="section level1 hasAnchor" number="3">
 <h1><span class="header-section-number">Chapter 3</span> Time Series<a href="time-series.html#time-series" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="decomposition" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Decomposition<a href="time-series.html#decomposition" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We want to decompose our time series into three parts: a trend component (<span class="math inline">\(T\)</span>), a seasonality component (<span class="math inline">\(S\)</span>), and a random component (<span class="math inline">\(R\)</span>). That is, for each observation <span class="math inline">\(Y_t\)</span>, we want to break it down into three parts:</p>
 <p><span class="math inline">\(Y_T = T_t + S_t + R_t\)</span></p>
 <p>First, let’s talk about the trend component (T). The trend component is a moving average, which you can obtain using the <code>ma</code> function within the <em>forecast</em> library.</p>
@@ -207,10 +213,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Now, plot each line:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="time-series.html#cb16-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
 <span id="cb16-2"><a href="time-series.html#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">!</span>(<span class="fu">c</span>(<span class="st">&quot;week_no&quot;</span>, <span class="st">&quot;id&quot;</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-3"><a href="time-series.html#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(id, value, <span class="at">color =</span> name)) <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<span id="cb16-3"><a href="time-series.html#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(id, value, <span class="at">color =</span> name)) <span class="sc">+</span> </span>
+<span id="cb16-4"><a href="time-series.html#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb16-5"><a href="time-series.html#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb16-6"><a href="time-series.html#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Decomposition of invoiced time series&quot;</span>)</span></code></pre></div>
 <pre><code>## Warning: Removed 104 row(s) containing missing values (geom_path).</code></pre>
 <p><img src="series_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+</div>
+<div id="forecasting" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Forecasting<a href="time-series.html#forecasting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 
+</div>
 </div>
             </section>
 
