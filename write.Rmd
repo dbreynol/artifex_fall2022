@@ -14,10 +14,12 @@ set.seed(1)
 # generate some fake data that resembles our real dataset (noce the week_no variable, which 
 # corresponds with the enterprise week number from your original data)
 
-df = data.frame( invoiced = round(rnorm(52 * 3, mean = 100, sd = 30), 0), 
+trend = seq( from = 10, to = 10 + 52 * 3 - 1, by = 1)
+
+df = data.frame( invoiced = trend + (rnorm(52 * 3, mean = 25, sd = 40)), 
                  week_no = rep(1:52, 3), # week number
                  id = 1:(52 * 3)) 
-
+plot(df$invoiced, type = "l")
 
 y_ts = ts(df$invoiced, frequency = 52) # make your data into a time series object
 df$trend = ma(y_ts, order = 52) # use the ma function from the forecast library
@@ -47,7 +49,7 @@ df = mutate(df, R = invoiced - trend - S)
 
 Now, plot each line:
 
-```{r echo=TRUE}
+```{r echo=TRUE, warning=FALSE, message=FALSE}
 df %>% 
   pivot_longer(!(c("week_no", "id"))) %>% 
   ggplot(aes(id, value, color = name)) + 
@@ -57,3 +59,31 @@ df %>%
 ```
 
 ## Forecasting
+
+Simple exponential smoothing - forecast the next value as a weighted average of past values.
+
+```{r echo=TRUE}
+
+fx1 <- ses(y_ts, h=5)
+fx2 <- holt(y_ts, h=15)
+
+round(accuracy(fx1),2)
+
+autoplot(y_ts) +
+  autolayer(fx1, series="Simple Exponential Smoothing", PI=F) +
+  autolayer(fx2, series="Holt Winters", PI=F) + 
+  ylab("Invoiced") + xlab("Year")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
