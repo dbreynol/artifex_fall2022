@@ -60,7 +60,33 @@ df %>%
 
 ## Forecasting
 
-Simple exponential smoothing - forecast the next value as a weighted average of past values.
+Let's consider some very simple potential forecast models. The simplest potential model is to forecast future values as the last observed value. That is,
+
+\begin{equation}
+\hat{y}_{T+1 | T} = y_T
+\end{equation}
+
+Another very simple model consists of forecasting future values as the average over the entire observed series. That is,
+
+\begin{equation}
+\hat{y}_{T+1 | T} = \frac{1}{T} \sum_{i=1}^T y_i
+\end{equation}
+
+A slightly more complicated approach that typically works better is to forecast future values as a weighted average of past values, with higher weights assigned to more recent observations. This model can be expressed as,
+
+\begin{equation}
+\hat{y}_{T+h | T} = \alpha y_T + (1-\alpha) \hat{y}_{T | T - 1}
+\end{equation}
+
+How can we show that weights are decreasing in time? What does this expression imply about forecasts from this model? This is implemented in <code>ses</code> below.
+
+The next level up in complexity is using the same idea but adding a trend estimate. In this case, the forecast values are,
+
+\begin{equation}
+\hat{y}_{T+h | T} = l_T + h b_T,
+\end{equation}
+
+Where $l$ is the estimated level of the time series and $b_T$ is the estimated trend at time $T$. What does this expression imply about forecasts from this model? This is implemented in <code>holt</code> below.
 
 ```{r echo=TRUE}
 

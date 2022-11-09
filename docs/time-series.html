@@ -223,7 +223,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="forecasting" class="section level2 hasAnchor" number="3.2">
 <h2><span class="header-section-number">3.2</span> Forecasting<a href="time-series.html#forecasting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Simple exponential smoothing - forecast the next value as a weighted average of past values.</p>
+<p>Let’s consider some very simple potential forecast models. The simplest potential model is to forecast future values as the last observed value. That is,</p>
+<p><span class="math display">\[\begin{equation}
+\hat{y}_{T+1 | T} = y_T
+\end{equation}\]</span></p>
+<p>Another very simple model consists of forecasting future values as the average over the entire observed series. That is,</p>
+<p><span class="math display">\[\begin{equation}
+\hat{y}_{T+1 | T} = \frac{1}{T} \sum_{i=1}^T y_i
+\end{equation}\]</span></p>
+<p>A slightly more complicated approach that typically works better is to forecast future values as a weighted average of past values, with higher weights assigned to more recent observations. This model can be expressed as,</p>
+<p><span class="math display">\[\begin{equation}
+\hat{y}_{T+h | T} = \alpha y_T + (1-\alpha) \hat{y}_{T | T - 1}
+\end{equation}\]</span></p>
+<p>How can we show that weights are decreasing in time? What does this expression imply about forecasts from this model? This is implemented in <code>ses</code> below.</p>
+<p>The next level up in complexity is using the same idea but adding a trend estimate. In this case, the forecast values are,</p>
+<p><span class="math display">\[\begin{equation}
+\hat{y}_{T+h | T} = l_T + h b_T,
+\end{equation}\]</span></p>
+<p>Where <span class="math inline">\(l\)</span> is the estimated level of the time series and <span class="math inline">\(b_T\)</span> is the estimated trend at time <span class="math inline">\(T\)</span>. What does this expression imply about forecasts from this model? This is implemented in <code>holt</code> below.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="time-series.html#cb18-1" aria-hidden="true" tabindex="-1"></a>fx1 <span class="ot">&lt;-</span> <span class="fu">ses</span>(y_ts, <span class="at">h=</span><span class="dv">5</span>)</span>
 <span id="cb18-2"><a href="time-series.html#cb18-2" aria-hidden="true" tabindex="-1"></a>fx2 <span class="ot">&lt;-</span> <span class="fu">holt</span>(y_ts, <span class="at">h=</span><span class="dv">15</span>)</span>
 <span id="cb18-3"><a href="time-series.html#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
