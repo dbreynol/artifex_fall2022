@@ -12,3 +12,4 @@ assignment-2
 time-series
 decomposition
 forecasting
+statistical-model

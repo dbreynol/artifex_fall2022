@@ -102,10 +102,37 @@ autoplot(y_ts) +
 ```
 
 
+## Statistical model
+
+One of the drawbacks of the forecasting methods we have used so far is that there is no uncertainty quantification. Fortunately, there is an easy way to formulate the exponential smoothing models we have been working with as a statistical model. For more detail, [see this excellent resource](https://otexts.com/fpp2/ets.html).
 
 
 
+```{r echo=TRUE, warning=FALSE}
+mod = ets(y_ts, model="ZZZ", damped=NULL, alpha=NULL, beta=NULL,
+    gamma=NULL, phi=NULL, lambda=NULL, biasadj=FALSE,
+    additive.only=FALSE, restrict=TRUE,
+    allow.multiplicative.trend=FALSE)
+```
 
+Once the model is fit, we can see which model was chosen using the <code>summary</code> function. We label each state space model as ETS( $\cdot, \cdot, \cdot$), for (Error, Trend, Seasonal). The possibilities for each component are: Error = {$A,M$}, Trend = {$N,A,A_d$}, and Seasonal = {$N,A,M$}. Here, $M$ denotes multiply and $A$ denotes add. In an $M$ type model, the component multiplies (i.e., a season in which invoices are 1.1 times as large).
+
+```{r}
+summary(mod)
+```
+
+There is also a straightforward way to forecast using the fitted model.
+
+```{r echo=TRUE}
+mod %>% forecast(h=15) %>% autoplot()
+```
+
+**To do**
+
+1. Cut your time series into a training set (all but the last 3 months of data) and a test set (last 3 months)
+2. Fit a state-space model using <code>ETS</code> to your (weekly) time series. What model was chosen? Compare forecasts for 12 weeks ahead to the actual data.
+3. Now make your training set and test set into monthly data and repeat step 2.
+4. On a monthly basis, how do the residuals of the weekly model compare to the residuals of the monthly model?
 
 
 
